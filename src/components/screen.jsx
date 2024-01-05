@@ -12,7 +12,8 @@ function Screen({ contacs, setContactRoot }) { // lifted the state up (contacts 
   // to maintain the list of contacts
   const [contactsArr, setContacsArr] = useState(contacs);
   // to show the popup
-  const [showPopup, setShowPopup] = useState(false);
+  const [showPopupForNew, setShowPopupForNew] = useState(false);
+  const [showPopupForUpdate, setShowPopupForUpdate] = useState(false);
   // to disable scroll of the list (for popup display)
   const [hasPopup, setHasPopup] = useState(false);
   // to select box to disable scroll
@@ -32,12 +33,13 @@ function Screen({ contacs, setContactRoot }) { // lifted the state up (contacts 
   }
   function scrollLockForPopup() {
     scrollBox.current.scrollTop = 0;
-    setShowPopup(true);
+    setShowPopupForNew(true);
     setHasPopup(true);
   }
 
   function closePopup() {
-    setShowPopup(false);
+    setShowPopupForNew(false);
+    setShowPopupForUpdate(false);
     setHasPopup(false);
   }
   function addContact(name, email) {
@@ -52,6 +54,18 @@ function Screen({ contacs, setContactRoot }) { // lifted the state up (contacts 
     );
     setContactRoot(newArr);
   }
+  let [oldContactDetails,setOldContactDetails] = useState();
+  function editContactInitialize(details){
+    setOldContactDetails(details)
+    setShowPopupForUpdate(true);
+  }
+  function editContact(oldDetails,newDetails){
+    const deletedOld = contactsArr.filter(
+        (elem) => !(elem.name === oldDetails.name && elem.email === oldDetails.email)
+      );
+    const newArr = [newDetails,...deletedOld];
+    setContactRoot(newArr);
+  }
 
   return (
     // main box of fixed size
@@ -63,11 +77,13 @@ function Screen({ contacs, setContactRoot }) { // lifted the state up (contacts 
       </div>
       {/* main list */}
       <div className={hasPopup ? Style.contentPopup : Style.contentNoPopup} ref={scrollBox}>
-        {showPopup && <Popup colsePopup={closePopup} addContact={addContact} />}
+        {showPopupForNew && <Popup colsePopup={closePopup} addContact={addContact} isForUpdate={false}/>}
+
+        {showPopupForUpdate && <Popup isForUpdate={true} colsePopup={closePopup} oldContactDetails={oldContactDetails} editContact={editContact}/>}
 
         {contactsArr.length ? (
           contactsArr.map((elem, ind) => {
-            return <Card key={ind} details={elem} deleteIt={deleteContact} />;
+            return <Card key={ind} details={elem} deleteIt={deleteContact}  editContact={editContactInitialize} />;
           })
         ) : (
           <div className={Style.noContent}>

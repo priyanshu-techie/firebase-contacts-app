@@ -1,11 +1,13 @@
 /* eslint-disable react/prop-types */
 import Style from "../style/popup.module.css"
 import NewCon from "./addNew";
+import EditCon from "./editContact";
 
-function Popup({colsePopup,addContact}){
+// now i understand the reason to have a global contex manangement
+function Popup({ colsePopup, addContact, oldContactDetails, isForUpdate, editContact }){
     return(
         <div className={Style.popup}>
-            <NewCon colsePopup={colsePopup} addContact={addContact} />
+            {isForUpdate? <EditCon oldContactDetails={oldContactDetails} colsePopup={colsePopup} editContact={editContact}/> : <NewCon colsePopup={colsePopup} addContact={addContact} />}
         </div>
     )
 }

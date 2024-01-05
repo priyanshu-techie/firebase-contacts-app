@@ -1,0 +1,1 @@
+Made too much sphegetti code, not a good approach , can easily break on changes. But koi nii, learning.
