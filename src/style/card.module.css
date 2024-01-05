@@ -1,0 +1,43 @@
+.cardBox{
+    border-radius: 10px;
+    background-color: rgb(255,234,174);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}::-webkit-scrollbar{
+    display: none;
+}
+
+.icon{
+    color: red;
+    font-size: 50px;
+    font-weight: 50;
+    margin-left: 0.5rem;
+    width: 10%;
+}
+.nameAndEmail{
+    line-height: 0;
+    text-align: start;
+    margin-left: 1rem;
+    width: 60%;
+}
+.name{
+    font-weight: bold;
+}
+.email{
+    font-size: 0.9rem;
+}
+.editDel{
+    width: 30%;
+}
+.edit{
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+.delete{
+    font-size: 1.5rem;
+    color: blue;
+    cursor: pointer;
+}

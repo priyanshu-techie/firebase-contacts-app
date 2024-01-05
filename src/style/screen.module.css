@@ -1,0 +1,60 @@
+.main{
+    max-width: 300px;
+    padding: 1rem;
+    height: 90vh;
+    background-color: rgb(50,51,52);
+}
+.header{
+    height: 20%;
+}
+.appName{
+    background-color: white;
+    color: black;
+    padding: 0.5rem;
+    border-radius: 10px;
+    font-weight: bolder;
+}
+.searchBox{
+    display: flex;
+    margin-top: 1rem;
+    justify-content: space-between;
+}
+.inputBox{
+    width: 80%;
+}
+.inputBox>input{
+    width: 100%;
+    padding: 0.5rem;
+    background-color: rgb(50,51,52);
+    border: 1px solid white;
+    border-radius: 10px;
+    color:white;
+}
+.inputBox>input::placeholder{
+    color: white;
+}
+.icon{
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+/* MAIN Content */
+.noContent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    height: 90%;
+}
+
+.contentNoPopup{
+    height: 75%;
+    overflow: scroll;
+    position: relative;
+}
+.contentPopup{
+    height: 75%;
+    overflow: hidden;
+    position: relative;
+}
