@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Screen from "./components/screen";
 import "./style/index.css";
 
@@ -40,9 +41,11 @@ function App() {
     { name: "Natalie Cooper", email: "natalie.cooper@example.com" },
   ];
 
+  const [contactRoot,setContactRoot] = useState(contacs);
+
   return (
     <center>
-      <Screen contacs={contacs}  />
+      <Screen contacs={contactRoot} setContactRoot={setContactRoot}  />
     </center>
   );
 }

@@ -3,7 +3,7 @@ import { useRef } from "react";
 import Style from "../style/screen.module.css"
 import { IoMdAddCircle } from "react-icons/io";
 
-function SearchBox({ handleInputChange, addItem }){
+function SearchBox({ handleInputChange, scrollLockForPopup }){
     let input = useRef()
 
     return(
@@ -12,7 +12,7 @@ function SearchBox({ handleInputChange, addItem }){
                 <input type="text" placeholder="🔍  Search Contact" ref={input} onChange={()=>handleInputChange(input.current.value)} />
             </div>
             <div>
-                <IoMdAddCircle className={Style.icon} onClick={addItem}/>
+                <IoMdAddCircle className={Style.icon} onClick={scrollLockForPopup}/>
             </div>
         </div>
     )
