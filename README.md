@@ -1,8 +1,10 @@
-# React + Vite
+# React fullstack Contact app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Data flow
+1. Used useEffect in the app component to do backend request.
+2. Used async functions in components to implement add, delete and update.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* Wrote a bit of sphegetti code. Not a good one but I am learning.
+* Code is based on functional programming
+* I don't know how to make it object oriented. Make it OO in future after learning it.
