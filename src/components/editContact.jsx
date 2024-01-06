@@ -2,11 +2,22 @@
 import { useState } from "react";
 import Style from "../style/popup.module.css";
 import { IoIosClose } from "react-icons/io";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../config/firebase";
 
 
 function EditCon({closePopup, oldContactDetails, editContact }){
     const [name,setName] = useState(oldContactDetails.name);
     const [email,setEmail] = useState(oldContactDetails.email);
+
+    const editContactFromDb = async(id,newData)=>{
+        try {
+            const contactRef = doc(db,"contacts", id);
+            await updateDoc(contactRef,newData);
+        } catch (error) {
+            console.log("error while trying to update the contact ",error);
+        }
+    }
 
     return <div className={Style.newCon}>
         <IoIosClose className={Style.closeIcon} onClick={closePopup}/>
@@ -19,7 +30,11 @@ function EditCon({closePopup, oldContactDetails, editContact }){
             <input type="email" name="email" value={email} onChange={(elem)=>setEmail(elem.target.value)}/>
         </div>
         <div>
-            <button onClick={()=>{editContact(oldContactDetails, {name,email}); closePopup();}}>Update Contact</button>
+            <button onClick={()=>{
+                editContact(oldContactDetails, {name,email});
+                closePopup();
+                editContactFromDb(oldContactDetails.id, {name,email});
+            }}>Update Contact</button>
         </div>
     </div>
 }

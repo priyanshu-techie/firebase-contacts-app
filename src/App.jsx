@@ -2,7 +2,7 @@
 import { useState,useEffect } from "react";
 import Screen from "./components/screen";
 import "./style/index.css";
-import { collection, getDocs, snapshotEqual } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "./config/firebase";
 
 function App() {

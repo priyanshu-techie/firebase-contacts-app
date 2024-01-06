@@ -56,7 +56,7 @@ function Screen({ contacs, setContactRoot }) { // lifted the state up (contacts 
     );
     setContactRoot(newArr);
   }
-  
+
   let [oldContactDetails,setOldContactDetails] = useState();
 
   function editContactInitialize(details){
@@ -83,6 +83,7 @@ function Screen({ contacs, setContactRoot }) { // lifted the state up (contacts 
       </div>
       {/* main list */}
       <div className={hasPopup ? Style.contentPopup : Style.contentNoPopup} ref={scrollBox}>
+        
         {showPopupForNew && <Popup>
             <NewCon closePopup={closePopup} addContact={addContact} />
         </Popup>}
