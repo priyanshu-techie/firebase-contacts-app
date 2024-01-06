@@ -2,6 +2,8 @@
 import Style from "../style/screen.module.css";
 import SearchBox from "./searchBox";
 import Card from "./card";
+import NewCon from "./addNew";
+import EditCon from "./editContact";
 import Popup from "./popup";
 import { useEffect, useRef, useState } from "react";
 
@@ -54,7 +56,9 @@ function Screen({ contacs, setContactRoot }) { // lifted the state up (contacts 
     );
     setContactRoot(newArr);
   }
+  
   let [oldContactDetails,setOldContactDetails] = useState();
+
   function editContactInitialize(details){
     scrollBox.current.scrollTop = 0;
     setOldContactDetails(details)
@@ -79,9 +83,13 @@ function Screen({ contacs, setContactRoot }) { // lifted the state up (contacts 
       </div>
       {/* main list */}
       <div className={hasPopup ? Style.contentPopup : Style.contentNoPopup} ref={scrollBox}>
-        {showPopupForNew && <Popup colsePopup={closePopup} addContact={addContact} isForUpdate={false}/>}
+        {showPopupForNew && <Popup>
+            <NewCon closePopup={closePopup} addContact={addContact} />
+        </Popup>}
 
-        {showPopupForUpdate && <Popup isForUpdate={true} colsePopup={closePopup} oldContactDetails={oldContactDetails} editContact={editContact}/>}
+        {showPopupForUpdate && <Popup>
+            <EditCon oldContactDetails={oldContactDetails} closePopup={closePopup} editContact={editContact}/>
+        </Popup>}
 
         {contactsArr.length ? (
           contactsArr.map((elem, ind) => {

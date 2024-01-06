@@ -15,7 +15,6 @@ function App() {
         const contactsRef  = collection(db,"contacts");
         const snapShot = await getDocs(contactsRef);
         const contactsList = snapShot.docs.map((doc)=>{return { id: doc.id, ...doc.data() }}) // the id and all other data of the document fomr the collection
-        console.log(contactsList);
         setContactRoot(contactsList);
       } catch (error) {
         console.error("Error fetching data: ", error);

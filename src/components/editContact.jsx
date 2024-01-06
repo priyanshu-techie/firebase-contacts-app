@@ -4,12 +4,12 @@ import Style from "../style/popup.module.css";
 import { IoIosClose } from "react-icons/io";
 
 
-function EditCon({colsePopup, oldContactDetails, editContact }){
+function EditCon({closePopup, oldContactDetails, editContact }){
     const [name,setName] = useState(oldContactDetails.name);
     const [email,setEmail] = useState(oldContactDetails.email);
 
     return <div className={Style.newCon}>
-        <IoIosClose className={Style.closeIcon} onClick={colsePopup}/>
+        <IoIosClose className={Style.closeIcon} onClick={closePopup}/>
         <div>
             <label htmlFor="username">Username:</label> <br />
             <input type="text" name="username" value={name} onChange={(elem)=>setName(elem.target.value)} />
@@ -19,7 +19,7 @@ function EditCon({colsePopup, oldContactDetails, editContact }){
             <input type="email" name="email" value={email} onChange={(elem)=>setEmail(elem.target.value)}/>
         </div>
         <div>
-            <button onClick={()=>{editContact(oldContactDetails, {name,email}); colsePopup();}}>Update Contact</button>
+            <button onClick={()=>{editContact(oldContactDetails, {name,email}); closePopup();}}>Update Contact</button>
         </div>
     </div>
 }
