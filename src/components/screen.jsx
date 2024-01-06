@@ -56,8 +56,10 @@ function Screen({ contacs, setContactRoot }) { // lifted the state up (contacts 
   }
   let [oldContactDetails,setOldContactDetails] = useState();
   function editContactInitialize(details){
+    scrollBox.current.scrollTop = 0;
     setOldContactDetails(details)
     setShowPopupForUpdate(true);
+    setHasPopup(true)
   }
   function editContact(oldDetails,newDetails){
     const deletedOld = contactsArr.filter(
