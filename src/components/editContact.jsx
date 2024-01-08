@@ -1,26 +1,22 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Style from "../style/popup.module.css";
 import { IoIosClose } from "react-icons/io";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../config/firebase";
+import { editContactFromDb } from "../utils/dbfunctions";
+import { ContactsContext } from "../store/context";
 
 
-function EditCon({closePopup, oldContactDetails, editContact }){
+function EditCon({oldContactDetails}){
+
+    const methods = useContext(ContactsContext);
+
     const [name,setName] = useState(oldContactDetails.name);
     const [email,setEmail] = useState(oldContactDetails.email);
 
-    const editContactFromDb = async(id,newData)=>{
-        try {
-            const contactRef = doc(db,"contacts", id);
-            await updateDoc(contactRef,newData);
-        } catch (error) {
-            console.log("error while trying to update the contact ",error);
-        }
-    }
+
 
     return <div className={Style.newCon}>
-        <IoIosClose className={Style.closeIcon} onClick={closePopup}/>
+        <IoIosClose className={Style.closeIcon} onClick={methods.closePopup}/>
         <div>
             <label htmlFor="username">Username:</label> <br />
             <input type="text" name="username" value={name} onChange={(elem)=>setName(elem.target.value)} />
@@ -31,8 +27,8 @@ function EditCon({closePopup, oldContactDetails, editContact }){
         </div>
         <div>
             <button onClick={()=>{
-                editContact(oldContactDetails, {name,email});
-                closePopup();
+                methods.editContact(oldContactDetails, {name,email});
+                methods.closePopup();
                 editContactFromDb(oldContactDetails.id, {name,email});
             }}>Update Contact</button>
         </div>

@@ -6,6 +6,7 @@ import NewCon from "./addNew";
 import EditCon from "./editContact";
 import Popup from "./popup";
 import { useEffect, useRef, useState } from "react";
+import { ContactsContext } from "../store/context";
 
 // passing state to state and tehn using it will not work
 // dont use variables to store data they dont change on state chnage
@@ -73,6 +74,8 @@ function Screen({ contacs, setContactRoot }) { // lifted the state up (contacts 
     setContactRoot(newArr);
   }
 
+
+
   return (
     // main box of fixed size
     <div className={Style.main}>
@@ -82,29 +85,37 @@ function Screen({ contacs, setContactRoot }) { // lifted the state up (contacts 
         <SearchBox handleInputChange={handleInputChange} scrollLockForPopup={scrollLockForPopup} />
       </div>
       {/* main list */}
-      <div className={hasPopup ? Style.contentPopup : Style.contentNoPopup} ref={scrollBox}>
-        
-        {showPopupForNew && <Popup>
-            <NewCon closePopup={closePopup} addContact={addContact} />
-        </Popup>}
-
-        {showPopupForUpdate && <Popup>
-            <EditCon oldContactDetails={oldContactDetails} closePopup={closePopup} editContact={editContact}/>
-        </Popup>}
-
-        {contactsArr.length ? (
-          contactsArr.map((elem, ind) => {
-            return <Card key={ind} details={elem} deleteIt={deleteContact}  editContact={editContactInitialize} />;
-          })
-        ) : (
-          <div className={Style.noContent}>
-            <div>
-              <h2>🙍‍♂️ No Contacts Found</h2>
+      <ContactsContext.Provider value={{
+          closePopup,
+          addContact,
+          editContact,
+          deleteIt:deleteContact,
+          editContactInitialize
+        }}>
+        <div className={hasPopup ? Style.contentPopup : Style.contentNoPopup} ref={scrollBox}>
+          
+          {showPopupForNew && <Popup>
+              <NewCon/>
+          </Popup>}
+          {showPopupForUpdate && <Popup>
+              <EditCon oldContactDetails={oldContactDetails}/>
+          </Popup>}
+            
+          {contactsArr.length ? (
+            contactsArr.map((elem, ind) => {
+              return <Card key={ind} details={elem}/>;
+            })
+          ) : (
+            <div className={Style.noContent}>
+              <div>
+                <h2>🙍‍♂️ No Contacts Found</h2>
+              </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      </ContactsContext.Provider>
     </div>
+    
   );
 }
 

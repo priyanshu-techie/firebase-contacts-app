@@ -2,25 +2,17 @@
 import { useState,useEffect } from "react";
 import Screen from "./components/screen";
 import "./style/index.css";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "./config/firebase";
+import { getContact } from "./utils/dbfunctions";
 
 function App() {
   const [contactRoot,setContactRoot] = useState([]);
 
   // fetching the data form firebase
   useEffect(()=>{
-    const getContact = async ()=>{
-      try {
-        const contactsRef  = collection(db,"contacts");
-        const snapShot = await getDocs(contactsRef);
-        const contactsList = snapShot.docs.map((doc)=>{return { id: doc.id, ...doc.data() }}) // the id and all other data of the document fomr the collection
-        setContactRoot(contactsList);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
-    }
-    getContact();
+    (async()=>{
+      const list = await getContact();
+      setContactRoot(list);
+    })(); // Immediately Invoke Funtion Expression IIFE.
   },[])
   
 

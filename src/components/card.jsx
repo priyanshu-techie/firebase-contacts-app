@@ -3,18 +3,15 @@ import Style from "../style/card.module.css"
 import { FaRegCircleUser } from "react-icons/fa6";
 import { TbEditCircle } from "react-icons/tb";
 import { FaTrashCan } from "react-icons/fa6";
-import { deleteDoc, doc } from "firebase/firestore";
-import { db } from "../config/firebase";
+import { deleteContactFromDb } from "../utils/dbfunctions";
+import { useContext } from "react";
+import { ContactsContext } from "../store/context";
 
-function Card({details,deleteIt,editContact}){
+function Card({details}){
     
-    const deleteContactFromDb = async(id)=>{
-        try{
-            await deleteDoc(doc(db,"contacts",id));
-        }catch(err){
-            console.log('error while delteing the contact ',err)
-        }
-    }
+    
+
+    const methods = useContext(ContactsContext);
 
     return(
         <div className={Style.cardBox}>
@@ -24,9 +21,9 @@ function Card({details,deleteIt,editContact}){
                 <p className={Style.email}>{details.email}</p>
             </div>
             <div className={Style.editDel}>
-                <TbEditCircle className={Style.edit} onClick={()=>editContact(details)} />
+                <TbEditCircle className={Style.edit} onClick={()=>methods.editContactInitialize(details)} />
                 <FaTrashCan className={Style.delete} onClick={()=>{
-                    deleteIt(details);
+                    methods.deleteIt(details);
                     deleteContactFromDb(details.id)
                 }}/>
             </div>
