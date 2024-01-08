@@ -15,10 +15,8 @@ function Screen({ contacs, setContactRoot }) { // lifted the state up (contacts 
   // to maintain the list of contacts
   const [contactsArr, setContacsArr] = useState(contacs);
   // to show the popup
-  const [showPopupForNew, setShowPopupForNew] = useState(false);
-  const [showPopupForUpdate, setShowPopupForUpdate] = useState(false);
-  // to disable scroll of the list (for popup display)
-  const [hasPopup, setHasPopup] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
   // to select box to disable scroll
   const scrollBox = useRef();
   // since passing contacts as state in a state and then using it hence it is not getting updated , to make it updated on a single state change from the root (it is not causing the root to update here in the component) hence using useEffect to update here on change
@@ -36,14 +34,12 @@ function Screen({ contacs, setContactRoot }) { // lifted the state up (contacts 
   }
   function scrollLockForPopup() {
     scrollBox.current.scrollTop = 0;
-    setShowPopupForNew(true);
-    setHasPopup(true);
+    setShowPopup(true);
   }
 
   function closePopup() {
-    setShowPopupForNew(false);
-    setShowPopupForUpdate(false);
-    setHasPopup(false);
+    setShowPopup(false);
+    setIsUpdate(false);
   }
   function addContact(name, email) {
     const newObj = { name, email };
@@ -61,10 +57,9 @@ function Screen({ contacs, setContactRoot }) { // lifted the state up (contacts 
   let [oldContactDetails,setOldContactDetails] = useState();
 
   function editContactInitialize(details){
-    scrollBox.current.scrollTop = 0;
-    setOldContactDetails(details)
-    setShowPopupForUpdate(true);
-    setHasPopup(true)
+    setOldContactDetails(details);
+    scrollLockForPopup();
+    setIsUpdate(true);
   }
   function editContact(oldDetails,newDetails){
     const deletedOld = contactsArr.filter(
@@ -92,13 +87,10 @@ function Screen({ contacs, setContactRoot }) { // lifted the state up (contacts 
           deleteIt:deleteContact,
           editContactInitialize
         }}>
-        <div className={hasPopup ? Style.contentPopup : Style.contentNoPopup} ref={scrollBox}>
+        <div className={showPopup ? Style.contentPopup : Style.contentNoPopup} ref={scrollBox}>
           
-          {showPopupForNew && <Popup>
-              <NewCon/>
-          </Popup>}
-          {showPopupForUpdate && <Popup>
-              <EditCon oldContactDetails={oldContactDetails}/>
+          {showPopup&& <Popup>
+                { isUpdate? <EditCon oldContactDetails={oldContactDetails}/> : <NewCon/>}
           </Popup>}
             
           {contactsArr.length ? (
