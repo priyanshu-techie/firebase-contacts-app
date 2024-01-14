@@ -17,11 +17,11 @@ function NewCon(){
         <IoIosClose className={Style.closeIcon} onClick={methods.closePopup}/>
         <div>
             <label htmlFor="username">Username:</label> <br />
-            <input type="text" name="username" ref={nameRef} />
+            <input type="text" name="username" ref={nameRef} required/>
         </div>
         <div>
             <label htmlFor="email">Email:</label><br />
-            <input type="email" name="email" ref={emailRef}/>
+            <input type="email" name="email" ref={emailRef} required/>
         </div>
         <div>
             <button onClick={()=>{

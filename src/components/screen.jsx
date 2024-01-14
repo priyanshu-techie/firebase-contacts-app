@@ -8,7 +8,7 @@ import Popup from "./popup";
 import { useEffect, useRef, useState } from "react";
 import { ContactsContext } from "../store/context";
 
-// passing state to state and tehn using it will not work
+// passing state to state and then using it will not work
 // dont use variables to store data they dont change on state chnage
 
 function Screen({ contacs, setContactRoot }) { // lifted the state up (contacts arr) caz here i wanted the delete and add functions to be destroyed by search function

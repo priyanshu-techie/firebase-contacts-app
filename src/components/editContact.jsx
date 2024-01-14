@@ -19,11 +19,11 @@ function EditCon({oldContactDetails}){
         <IoIosClose className={Style.closeIcon} onClick={methods.closePopup}/>
         <div>
             <label htmlFor="username">Username:</label> <br />
-            <input type="text" name="username" value={name} onChange={(elem)=>setName(elem.target.value)} />
+            <input type="text" name="username"  required value={name} onChange={(elem)=>setName(elem.target.value)} />
         </div>
         <div>
             <label htmlFor="email">Email:</label><br />
-            <input type="email" name="email" value={email} onChange={(elem)=>setEmail(elem.target.value)}/>
+            <input type="email" name="email" required value={email} onChange={(elem)=>setEmail(elem.target.value)}/>
         </div>
         <div>
             <button onClick={()=>{
