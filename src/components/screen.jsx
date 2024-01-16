@@ -12,8 +12,8 @@ import { ContactsContext } from "../store/context";
 // passing state to state and then using it will not work
 // dont use variables to store data they dont change on state chnage
 
-function Screen({ contacs, setContactRoot, isfetching }) { // lifted the state up (contacts arr) caz here i wanted the delete and add functions to be destroyed by search function
-  // to maintain the list of contacts
+function Screen({ contacs, dispatchContacts, isfetching }) { // lifted the state up (contacts arr) caz here i wanted the delete and add functions to be destroyed by search function
+  // to maintain the contacts copy for the search functionality (see handleinputchange)
   const [contactsArr, setContacsArr] = useState(contacs);
   // to show the popup
   const [showPopup, setShowPopup] = useState(false);
@@ -31,6 +31,7 @@ function Screen({ contacs, setContactRoot, isfetching }) { // lifted the state u
     let newArr = contacs.filter((elem) =>
       elem.name.toLowerCase().includes(val)
     );
+    // if i directly set contacts root then it will clear the array and next time when i clear the input box there wont be any contacts since in set it to empty
     setContacsArr(newArr);
   }
   function scrollLockForPopup() {
@@ -43,16 +44,10 @@ function Screen({ contacs, setContactRoot, isfetching }) { // lifted the state u
     setIsUpdate(false);
   }
   function addContact(name, email) {
-    const newObj = { name, email };
-    const newArr = [newObj, ...contactsArr];
-    // adding and deleting should be done at the root.
-    setContactRoot(newArr);
+    dispatchContacts({type:"AddContact", payload:{name,email}});
   }
   function deleteContact(itemObj) {
-    const newArr = contactsArr.filter(
-      (elem) => !(elem.name === itemObj.name && elem.email === itemObj.email)
-    );
-    setContactRoot(newArr);
+    dispatchContacts({type:"DeleteContact",payload:itemObj})
   }
 
   let [oldContactDetails,setOldContactDetails] = useState();
@@ -63,11 +58,7 @@ function Screen({ contacs, setContactRoot, isfetching }) { // lifted the state u
     setIsUpdate(true);
   }
   function editContact(oldDetails,newDetails){
-    const deletedOld = contactsArr.filter(
-        (elem) => !(elem.name === oldDetails.name && elem.email === oldDetails.email)
-      );
-    const newArr = [newDetails,...deletedOld];
-    setContactRoot(newArr);
+    dispatchContacts({type:"EditContact",payload:{oldDetails,newDetails}})
   }
 
 
