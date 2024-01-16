@@ -5,13 +5,14 @@ import Card from "./card";
 import NewCon from "./addNew";
 import EditCon from "./editContact";
 import Popup from "./popup";
+import Loading from './loading'
 import { useEffect, useRef, useState } from "react";
 import { ContactsContext } from "../store/context";
 
 // passing state to state and then using it will not work
 // dont use variables to store data they dont change on state chnage
 
-function Screen({ contacs, setContactRoot }) { // lifted the state up (contacts arr) caz here i wanted the delete and add functions to be destroyed by search function
+function Screen({ contacs, setContactRoot, isfetching }) { // lifted the state up (contacts arr) caz here i wanted the delete and add functions to be destroyed by search function
   // to maintain the list of contacts
   const [contactsArr, setContacsArr] = useState(contacs);
   // to show the popup
@@ -86,14 +87,15 @@ function Screen({ contacs, setContactRoot }) { // lifted the state up (contacts 
           editContact,
           deleteIt:deleteContact,
           editContactInitialize
-        }}>
+      }}>
         <div className={showPopup ? Style.contentPopup : Style.contentNoPopup} ref={scrollBox}>
           
           {showPopup&& <Popup>
                 { isUpdate? <EditCon oldContactDetails={oldContactDetails}/> : <NewCon/>}
           </Popup>}
             
-          {contactsArr.length ? (
+          { isfetching? <Loading/> :
+          contactsArr.length ? (
             contactsArr.map((elem, ind) => {
               return <Card key={ind} details={elem}/>;
             })
